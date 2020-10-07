@@ -31,8 +31,7 @@ class LinearRegressionPyTorch(torch.nn.Module):
 ## TensorFlow Training Loop
 ```Python
 def squared_error(y_pred, y_true):
-    diff = y_pred - y_true
-    return tf.math.reduce_sum(diff * diff) / tf.size(diff, out_type=tf.dtypes.float32)
+    return tf.reduce_mean(tf.square(y_pred - y_true))
 
 tf_model = LinearRegressionKeras()
 [w, b] = tf_model.trainable_variables
@@ -54,8 +53,7 @@ for epoch in range(epochs):
 ## PyTorch Training Loop
 ```Python
 def squared_error(y_pred, y_true):
-    diff = y_pred - y_true
-    return torch.sum(diff * diff) / diff.numel()
+    return torch.mean(torch.square(y_pred - y_true))
 
 torch_model = LinearRegressionPyTorch()
 [w, b] = torch_model.parameters()
