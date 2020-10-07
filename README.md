@@ -11,8 +11,7 @@ class LinearRegressionKeras(tf.keras.Model):
         self.b = tf.Variable(tf.random.uniform(shape=[1], minval=-0.1, maxval=0.1))
 
     def __call__(self,x): 
-        y_pred = x * self.w + self.b
-        return y_pred
+        return x * self.w + self.b
 ```
 
 ## PyTorch Dynamic Model
@@ -29,4 +28,49 @@ class LinearRegressionPyTorch(torch.nn.Module):
         return x @ self.w + self.b
 ```
 
+## TensorFlow Training Loop
+```Python
+def squared_error(y_pred, y_true):
+    return tf.reduce_mean(tf.square(y_pred - y_true))
 
+tf_model = LinearRegressionKeras()
+[w, b] = tf_model.trainable_variables
+
+for epoch in range(epochs):
+    with tf.GradientTape() as tape:
+        predictions = tf_model(x)
+        loss = squared_error(predictions, y)
+        
+    w_grad, b_grad = tape.gradient(loss, tf_model.trainable_variables)
+
+    w.assign(w - w_grad * learning_rate)
+    b.assign(b - b_grad * learning_rate)
+
+    if epoch % 20 == 0:
+        print(f"Epoch {epoch} : Loss {loss.numpy()}")
+```
+
+## PyTorch Training Loop
+```Python
+def squared_error(y_pred, y_true):
+    diff = y_pred - y_true
+    return torch.sum(diff * diff) / diff.numel()
+
+torch_model = LinearRegressionPyTorch()
+[w, b] = torch_model.parameters()
+
+for epoch in range(epochs):
+    y_pred = torch_model(inputs)
+    loss = squared_error(y_pred, labels)
+
+    loss.backward()
+
+    with torch.no_grad():
+        w -= w.grad * learning_rate
+        b -= b.grad * learning_rate
+        w.grad.zero_()
+        b.grad.zero_()
+
+    if epoch % 20 == 0:
+      print(f"Epoch {epoch} : Loss {loss.data}")
+```
