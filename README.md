@@ -1,3 +1,3 @@
-# TF-VS-PyTorch
+# TF-VS-PyTorch Dynamic Model
 
-Comparing AutoGrad approaches in PyTorch and TensorFlow 2.x for training from scratch a Linear Regression with a custom model class/module and manual training loop / loss function
+Comparing AutoGrad Dynamic Model approaches between PyTorch and TensorFlow 2.x  training from scratch a Linear Regression with a custom dynamic model class/module and manual training loop / loss function
