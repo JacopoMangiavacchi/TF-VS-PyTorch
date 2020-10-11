@@ -18,11 +18,9 @@ class LinearRegressionKeras(tf.keras.Model):
 ```Python
 class LinearRegressionPyTorch(torch.nn.Module): 
     def __init__(self): 
-        super().__init__() 
-        self.w = torch.nn.Parameter(torch.Tensor(1, 1))
-        self.b = torch.nn.Parameter(torch.Tensor(1))
-        self.w.data.uniform_(-0.1, 0.1)
-        self.b.data.uniform_(-0.1, 0.1)
+        super().__init__()
+        self.w = torch.nn.Parameter(torch.Tensor(1, 1).uniform_(-0.1, 0.1))
+        self.b = torch.nn.Parameter(torch.Tensor(1).uniform_(-0.1, 0.1))
   
     def forward(self, x):  
         return x @ self.w + self.b
