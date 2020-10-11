@@ -1,4 +1,4 @@
-# TF-VS-PyTorch Dynamic Model
+# Dynamic Subclassed Models with AutoDiff on PyTorch Vs TensorFlow 2
 
 Comparing AutoDiff Dynamic Model approaches between PyTorch and TensorFlow 2.x  training from scratch a Linear Regression with a custom dynamic model class/module and manual training loop / loss function
 
