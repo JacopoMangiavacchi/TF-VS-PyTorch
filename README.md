@@ -71,3 +71,27 @@ for epoch in range(epochs):
     if epoch % 20 == 0:
       print(f"Epoch {epoch} : Loss {loss.data}")
 ```
+
+## TensorFlow Dynamic Model with Linear Layer
+```Python
+class LinearRegressionKeras(tf.keras.Model):
+    def __init__(self):
+        super().__init__()
+        self.linear = tf.keras.layers.Dense(1, activation=None) # , input_shape=[1]
+
+    def call(self, x): 
+        return self.linear(x)
+```
+
+## PyTorch Dynamic Model with Linear Layer
+```Python
+class LinearRegressionPyTorch(torch.nn.Module):
+    def __init__(self):
+        super(LinearRegressionPyTorch, self).__init__()
+        self.linear = torch.nn.Linear(1, 1)  
+
+    def forward(self, x):
+        return self.linear(x)
+```
+
+
