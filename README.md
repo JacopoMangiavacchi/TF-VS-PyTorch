@@ -103,4 +103,41 @@ tf_model_fit.compile(optimizer=tf.optimizers.SGD(learning_rate=learning_rate), l
 tf_model_fit.fit(x, y, epochs=epochs, batch_size=x.shape[0], verbose=1)
 ```
 
+## TensorFlow Training Loop with real Loss function and Optimizer
+```Python
+tf_model_train_loop = LinearRegressionKeras()
 
+optimizer = tf.keras.optimizers.SGD(learning_rate=learning_rate)
+
+for epoch in range(epochs * 3):
+    x_batch = tf.reshape(x, [200, 1])
+    with tf.GradientTape() as tape:
+        y_pred = tf_model_train_loop(x_batch)
+        y_pred = tf.reshape(y_pred, [200])
+        loss = tf.losses.mse(y_pred, y)
+    
+    grads = tape.gradient(loss, tf_model_train_loop.variables)
+    
+    optimizer.apply_gradients(grads_and_vars=zip(grads, tf_model_train_loop.variables))
+
+    if epoch % 20 == 0:
+        print(f"Epoch {epoch} : Loss {loss.numpy()}")
+```
+
+## PyTorch Training Loop with real Loss function and Optimizer
+```Python
+torch_model = LinearRegressionPyTorch()
+
+criterion = torch.nn.MSELoss(reduction='mean')
+optimizer = torch.optim.SGD(torch_model.parameters(), lr=learning_rate)
+
+for epoch in range(epochs * 3):
+    y_pred = torch_model(inputs)
+    loss = criterion(y_pred, labels)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    if epoch % 20 == 0:
+      print(f"Epoch {epoch} : Loss {loss.data}")
+```
