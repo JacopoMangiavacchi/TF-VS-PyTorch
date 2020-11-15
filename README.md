@@ -94,4 +94,13 @@ class LinearRegressionPyTorch(torch.nn.Module):
         return self.linear(x)
 ```
 
+## TensorFlow Training Loop with Fit
+```Python
+tf_model_fit = LinearRegressionKeras()
+tf_model_fit.compile(optimizer=tf.optimizers.SGD(learning_rate=learning_rate), loss='mean_absolute_error')
+# tf_model_fit.build(input_shape=(None, 1))
+# tf_model_fit.summary()
+tf_model_fit.fit(x, y, epochs=epochs, batch_size=x.shape[0], verbose=1)
+```
+
 
